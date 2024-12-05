@@ -23,12 +23,16 @@ router.delete("/lots/:id", async (req, res) => {
 router.post('/admin/login', async (req, res) => {
     const { username, password } = req.body;
 
-    const newUser = new User({
-        username,
-        password: await bcrypt.hash(password, 10),
-    });
+    const user = await User.findOne({username: username});
+    if (!user) {
+        return res.status(401).send('Invalid username or password');
+    }
 
-    req.session.user = newUser;
+    if (user.password != password) {
+        return res.status(401).send('Invalid username or password');
+    }
+
+    req.session.user = user;
     res.redirect('/admin');
 });
 

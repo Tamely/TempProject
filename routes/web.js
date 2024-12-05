@@ -38,7 +38,13 @@ function isAuthenticated(req, res, next) {
 
 router.get('/admin', isAuthenticated, async (req, res) => {
     const lots = await ParkingLot.find();
-    res.render('admin', { lots });
+    res.render('admin', { lots }, (err, content) => {
+        if (err) {
+            return res.status(500).send('Error rendering admin.ejs');
+        }
+
+        res.render('layout', { body: content });
+    });
 });
 
 module.exports = router;
