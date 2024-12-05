@@ -1,0 +1,53 @@
+<h1>Admin Panel</h1>
+
+<h2>Add Parking Lot</h2>
+<form action="/api/admin/add" method="POST">
+    <div>
+        <label for="name">Lot Name:</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+        <label for="availability">Availability (%):</label>
+        <input type="number" id="availability" name="availability" required>
+    </div>
+    <div>
+        <label for="day">Day:</label>
+        <select name="day" id="day" required>
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+        </select>
+    </div>
+    <button type="submit">Add Parking Lot</button>
+</form>
+
+<h2>Existing Parking Lots</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Availability (%)</th>
+            <th>Day</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% lots.forEach(lot => { %>
+            <tr>
+                <td><%= lot.name %></td>
+                <td><%= lot.availability %>%</td>
+                <td><%= lot.day %></td>
+                <td>
+                    <form action="/api/admin/delete" method="POST" style="display:inline;">
+                        <input type="hidden" name="id" value="<%= lot._id %>">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
+
+<a href="/api/admin/logout">Logout</a>

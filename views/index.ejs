@@ -1,0 +1,36 @@
+<h1>Parking Availability</h1>
+
+<form action="/" method="get">
+    <div class="mb-3">
+        <label for="day" class="form-label">Filter by Day</label>
+        <select id="day" name="day" class="form-select">
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Day</th>
+            <th>Availability (%)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% lots.forEach(lot => { %>
+            <tr>
+                <td><%= lot.name %></td>
+                <td><%= lot.day %></td>
+                <td class="<%= lot.availability > 70 ? 'bg-success text-light' : lot.availability > 40 ? 'bg-warning' : 'bg-danger text-light' %>">
+                    <%= lot.availability %>%
+                </td>
+            </tr>
+        <% }); %>
+    </tbody>
+</table>
